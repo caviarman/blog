@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-admin-layout',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  logout(event: Event) {
+    event.preventDefault();
+    this.router.navigate(['/admin' ,'login']);
   }
 
 }
