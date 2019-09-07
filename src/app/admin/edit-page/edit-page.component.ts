@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PostService } from 'src/app/shared/post.service';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Post } from '../../shared/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.scss']
 })
-export class EditPageComponent implements OnInit {
+export class EditPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
+  post: Post;
+  uSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,9 +25,10 @@ export class EditPageComponent implements OnInit {
   ngOnInit() {
     this.route.params.pipe(
       switchMap((params: Params) => {
-        return this.postsService.getById(params.id)
+        return this.postsService.getById(params.id);
       })
     ).subscribe((post: Post) => {
+      this.post = post;
       this.form = new FormGroup({
         title: new FormControl(post.title, Validators.required),
         text: new FormControl(post.text, Validators.required)
@@ -33,7 +37,22 @@ export class EditPageComponent implements OnInit {
   }
 
   submit() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.uSub = this.postsService.update({
+      ...this.post,
+      title: this.form.value.title,
+      text: this.form.value.text,
+    }).subscribe((res) => {
+      console.log('update post result', res);
+    });
+  }
 
+  ngOnDestroy() {
+    if (this.uSub) {
+      this.uSub.unsubscribe();
+    }
   }
 
 }

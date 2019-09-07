@@ -58,7 +58,7 @@ export class PostService {
     }
 
     update(post: Post): Observable<Post> {
-        return this.http.patch<Post>(`${environment.fireDbUrl}post/${post.id}.json`, post);
+        return this.http.patch<Post>(`${environment.fireDbUrl}posts/${post.id}.json`, post);
     }
 
     remove(id: string): Observable<void> {
