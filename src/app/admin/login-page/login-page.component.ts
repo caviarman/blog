@@ -23,14 +23,14 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['relogin']) {
+      if (params.relogin || params.fireAuthErr) {
         this.message = `Вы не авторизованы. Введите логин и пароль`;
       }
     });
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
-    })
+    });
   }
 
   submit() {
@@ -41,7 +41,7 @@ export class LoginPageComponent implements OnInit {
       email: this.form.value.email,
       password: this.form.value.password,
       returnSecureToken: true
-    }
+    };
     this.auth.login(user).subscribe(res => {
       console.log('login result', res);
       this.form.reset();

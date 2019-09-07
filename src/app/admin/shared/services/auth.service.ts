@@ -6,7 +6,7 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { tap, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 
 export class AuthService {
 
@@ -15,7 +15,7 @@ export class AuthService {
   get token(): string {
     const expDate = new Date(localStorage.getItem('fire-token-exp'));
     if (new Date() > expDate) {
-      this.logout()
+      this.logout();
       return null;
     }
     return localStorage.getItem('fire-token');
@@ -32,7 +32,7 @@ export class AuthService {
       .pipe(
         tap(this.setToken),
         catchError(this.handleError.bind(this))
-      )
+      );
   }
 
 
