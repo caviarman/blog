@@ -1,7 +1,20 @@
-<div class="posts" *ngIf="posts$ | async as posts; else loading">
+<!-- <div class="posts" *ngIf="posts$ | async as posts; else loading">
   <app-post *ngFor="let post of posts" [post]="post"></app-post>
 </div>
 
+<ng-template #loading>
+  <p class="text-center">Идет загрузка...</p>
+</ng-template> -->
+
+
+<div class="grid-container">
+  <h1 class="mat-h1">Блог</h1>
+  <mat-grid-list cols="2" rowHeight="570px">
+    <mat-grid-tile *ngIf="posts$ | async as posts; else loading" [colspan]="1" [rowspan]="1">
+      <app-post *ngFor="let post of posts" [post]="post"></app-post>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
 <ng-template #loading>
   <p class="text-center">Идет загрузка...</p>
 </ng-template>
