@@ -15,6 +15,9 @@ export interface Post {
   text: string;
   author: string;
   date: Date;
+  avatar?: string;
+  image?: string;
+  preview?: string;
 }
 
 export interface FireCreateResponse {

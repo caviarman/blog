@@ -36,7 +36,7 @@
   </mat-card-content>
   <mat-card-actions class="actions">
       <button mat-raised-button [routerLink]="['/post', post.id]">Читать</button>
-      <button mat-icon-button color="{{favorite}}" aria-label="Example icon-button with a heart icon" (click)="OnClickFavorite(card.id)">
+      <button mat-icon-button color="{{favorite}}" aria-label="Example icon-button with a heart icon" (click)="OnClickFavorite(post.id)">
           <mat-icon>favorite</mat-icon>
         </button>
   </mat-card-actions>

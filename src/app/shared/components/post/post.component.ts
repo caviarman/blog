@@ -10,9 +10,15 @@ export class PostComponent implements OnInit {
 
   @Input() post: Post;
 
+  favorite: string;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  OnClickFavorite(id) {
+
   }
 
 }
