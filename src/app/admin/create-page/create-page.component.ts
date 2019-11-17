@@ -37,7 +37,8 @@ export class CreatePageComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl(null, Validators.required),
       text: new FormControl(null, Validators.required),
-      author: new FormControl(null, Validators.required)
+      author: new FormControl(null, Validators.required),
+      image: new FormControl(null),
     });
   }
 
@@ -50,9 +51,10 @@ export class CreatePageComponent implements OnInit {
       title: this.form.value.title,
       author: this.form.value.author,
       text: this.form.value.text,
-      date: new Date(),
+      createdOn: new Date(),
+      updatedOn: new Date(),
       preview: '',
-      image: '',
+      image: this.form.value.image,
       avatar: ''
     };
 
@@ -69,6 +71,10 @@ export class CreatePageComponent implements OnInit {
     task.on('state_changed', () => {}, () => {}, () => {
       task.snapshot.ref.getDownloadURL().then(downloadURL => {
         console.log('File available at', downloadURL);
+        console.log('BEFORE', this.form);
+        this.form.value.image = downloadURL;
+        console.log('After', this.form);
+
       });
     });
   }

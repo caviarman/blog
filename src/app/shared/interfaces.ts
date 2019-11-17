@@ -12,12 +12,16 @@ export interface FireBase {
 export interface Post {
   id?: string;
   title: string;
+  epigraph?: string;
   text: string;
   author: string;
-  date: Date;
+  createdOn: Date;
+  updatedOn: Date;
   avatar?: string;
   image?: string;
   preview?: string;
+  deleted?: boolean;
+
 }
 
 export interface FireCreateResponse {

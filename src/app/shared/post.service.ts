@@ -23,7 +23,8 @@ export class PostService {
                     return {
                         ...post,
                         id: response.name,
-                        date: new Date(post.date)
+                        createdOn: new Date(post.createdOn),
+                        updatedOn: new Date(post.updatedOn)
                     };
                 })
             );
@@ -38,7 +39,8 @@ export class PostService {
                         .map(key => ({
                             ...response[key],
                             id: key,
-                            date: new Date(response[key].date)
+                            createdOn: new Date(response[key].createdOn),
+                            updatedOn: new Date(response[key].updatedOn)
                         }));
                 })
             );
@@ -51,7 +53,8 @@ export class PostService {
                     return {
                         ...post,
                         id,
-                        date: new Date(post.date)
+                        createdOn: new Date(post.createdOn),
+                        updatedOn: new Date(post.updatedOn)
                     };
                 })
             );
@@ -63,10 +66,6 @@ export class PostService {
 
     remove(id: string): Observable<void> {
         return this.http.delete<void>(`${environment.fireDbUrl}posts/${id}.json`);
-    }
-
-    getConfig(): Observable<any> {
-        return this.http.get<any>(`./config.json`);
     }
 
 }
