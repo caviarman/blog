@@ -70,11 +70,10 @@ export class CreatePageComponent implements OnInit {
     const task = storageRef.put(file);
     task.on('state_changed', () => {}, () => {}, () => {
       task.snapshot.ref.getDownloadURL().then(downloadURL => {
-        console.log('File available at', downloadURL);
-        console.log('BEFORE', this.form);
-        this.form.value.image = downloadURL;
-        console.log('After', this.form);
-
+        if (!!downloadURL) {
+          this.form.value.image = downloadURL;
+          this.alert.success('Изображение загружено!');
+        }
       });
     });
   }

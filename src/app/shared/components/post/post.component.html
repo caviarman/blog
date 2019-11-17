@@ -6,7 +6,7 @@
     </mat-card-title>
     <mat-card-subtitle>{{post.author}} от {{post.date | date:'dd.MM.yyyy'}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="{{post.image}}">
+  <img mat-card-image src="{{post.image}}" style="max-width: 600px;">
   <mat-card-content class="dashboard-card-content">
     <div><p>{{post.preview}}</p></div>
   </mat-card-content>
