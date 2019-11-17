@@ -37,7 +37,15 @@
         </small>
       </div>
     </div>
-  
+
+    
+    <div
+      class="form-control"
+    >
+      <label for="image">Изображение поста:</label>
+      <input type="file" (change)="onFileAdd()" #uploadImage id="image">
+    </div>
+
     <button
       type="submit"
       class="btn btn-block btn-dark"

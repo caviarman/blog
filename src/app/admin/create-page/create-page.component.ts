@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Post} from '../../shared/interfaces';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Post } from '../../shared/interfaces';
 import { PostService } from 'src/app/shared/post.service';
 import { AlertService } from '../shared/services/alert.service';
+import { environment as env} from 'src/environments/environment.prod';
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-create-page',
@@ -11,7 +14,17 @@ import { AlertService } from '../shared/services/alert.service';
 })
 export class CreatePageComponent implements OnInit {
 
+  @ViewChild('uploadImage', { static: true}) uploadImage;
   form: FormGroup;
+  firebaseConfig = {
+    apiKey: env.apiKey,
+    authDomain: env.authDomain,
+    databaseURL: env.databaseURL,
+    projectId: env.projectId,
+    storageBucket: env.storageBucket,
+    messagingSenderId: env.messagingSenderId,
+    appId: env.appId
+  };
 
   constructor(
     private postService: PostService,
@@ -20,6 +33,7 @@ export class CreatePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    firebase.initializeApp(this.firebaseConfig);
     this.form = new FormGroup({
       title: new FormControl(null, Validators.required),
       text: new FormControl(null, Validators.required),
@@ -46,6 +60,17 @@ export class CreatePageComponent implements OnInit {
       console.log('create result', res);
       this.form.reset();
       this.alert.success('Пост успешно создан!');
+    });
+  }
+
+  onFileAdd() {
+    const file: File = this.uploadImage.nativeElement.files[0];
+    const storageRef = firebase.storage().ref('postImages/' + file.name);
+    const task = storageRef.put(file);
+    task.on('state_changed', () => {}, () => {}, () => {
+      task.snapshot.ref.getDownloadURL().then(downloadURL => {
+        console.log('File available at', downloadURL);
+      });
     });
   }
 
