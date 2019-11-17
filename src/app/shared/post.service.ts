@@ -65,4 +65,8 @@ export class PostService {
         return this.http.delete<void>(`${environment.fireDbUrl}posts/${id}.json`);
     }
 
+    getConfig(): Observable<any> {
+        return this.http.get<any>(`./config.json`);
+    }
+
 }

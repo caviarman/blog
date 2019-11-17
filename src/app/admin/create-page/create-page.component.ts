@@ -57,7 +57,6 @@ export class CreatePageComponent implements OnInit {
     };
 
     this.postService.create(post).subscribe(res => {
-      console.log('create result', res);
       this.form.reset();
       this.alert.success('Пост успешно создан!');
     });
