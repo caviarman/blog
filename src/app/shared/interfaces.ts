@@ -14,12 +14,11 @@ export interface Post {
   title: string;
   epigraph?: string;
   text: string;
-  author: string;
   createdOn: Date;
   updatedOn: Date;
   avatar?: string;
   image?: string;
-  preview?: string;
+  preview: string;
   deleted?: boolean;
 
 }

@@ -15,6 +15,8 @@ import 'firebase/storage';
 export class CreatePageComponent implements OnInit {
 
   @ViewChild('uploadImage', { static: true}) uploadImage;
+  @ViewChild('uploader', { static: true}) uploader;
+  percentage = 0;
   form: FormGroup;
   firebaseConfig = {
     apiKey: env.apiKey,
@@ -37,7 +39,7 @@ export class CreatePageComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl(null, Validators.required),
       text: new FormControl(null, Validators.required),
-      author: new FormControl(null, Validators.required),
+      preview: new FormControl(null, Validators.required),
       image: new FormControl(null),
     });
   }
@@ -49,11 +51,10 @@ export class CreatePageComponent implements OnInit {
 
     const post: Post = {
       title: this.form.value.title,
-      author: this.form.value.author,
+      preview: this.form.value.preview,
       text: this.form.value.text,
       createdOn: new Date(),
       updatedOn: new Date(),
-      preview: '',
       image: this.form.value.image,
       avatar: ''
     };
@@ -68,7 +69,9 @@ export class CreatePageComponent implements OnInit {
     const file: File = this.uploadImage.nativeElement.files[0];
     const storageRef = firebase.storage().ref('postImages/' + file.name);
     const task = storageRef.put(file);
-    task.on('state_changed', () => {}, () => {}, () => {
+    task.on('state_changed', (snapshot) => {
+      this.percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+    }, () => {}, () => {
       task.snapshot.ref.getDownloadURL().then(downloadURL => {
         if (!!downloadURL) {
           this.form.value.image = downloadURL;

@@ -16,36 +16,39 @@
         </small>
       </div>
     </div>
+
+    <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('preview').touched && form.get('preview').invalid}"
+  >
+    <label for="preview">Краткое содержание:</label>
+    <input id="preview" type="text" formControlName="preview">
+    <div
+      *ngIf="form.get('preview').touched && form.get('preview').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('preview').errors.required">
+        Напишите краткое содержание статьи
+      </small>
+    </div>
+  </div>
   
     <div class="form-control">
       <label>Контент поста:</label>
       <quill-editor formControlName="text"></quill-editor>
     </div>
-  
-    <div
-      class="form-control"
-      [ngClass]="{invalid: form.get('author').touched && form.get('author').invalid}"
-    >
-      <label for="author">Автор поста:</label>
-      <input id="author" type="text" formControlName="author">
-      <div
-        *ngIf="form.get('author').touched && form.get('author').invalid"
-        class="validation"
-      >
-        <small *ngIf="form.get('author').errors.required">
-          Введите автора поста
-        </small>
-      </div>
-    </div>
 
     
-    <div
-      class="form-control"
-    >
-      <label for="image">Изображение поста:</label>
+    <div>
+      <label for="image" style="margin-right: 10px;">Изображение поста:</label>
       <input type="file" (change)="onFileAdd()" #uploadImage id="image">
     </div>
-
+    <mat-progress-bar
+          class="example-margin"    
+          [mode]="'determinate'"
+          [(value)]="percentage"
+          >
+      </mat-progress-bar>
     <button
       type="submit"
       class="btn btn-block btn-dark"

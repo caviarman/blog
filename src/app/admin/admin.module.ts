@@ -13,11 +13,13 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { SearchPipe } from './shared/search.pipe';
 import { AlertComponent } from './shared/components/alert/alert.component'; 
 import { AlertService } from './shared/services/alert.service';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
     AdminLayoutComponent, LoginPageComponent, DashboardPageComponent, CreatePageComponent, EditPageComponent, SearchPipe, AlertComponent],
   imports: [
+      MaterialModule,
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
