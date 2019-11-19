@@ -29,5 +29,8 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
     this.posts$ = this.postService.getAll();
   }
+  checkWidth() {
+    return window.innerWidth > 600 ? 2 : 1;
+  }
 
 }
