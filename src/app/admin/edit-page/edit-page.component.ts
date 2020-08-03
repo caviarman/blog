@@ -33,7 +33,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.post = post;
       this.form = new FormGroup({
         title: new FormControl(post.title, Validators.required),
-        text: new FormControl(post.text, Validators.required)
+        text: new FormControl(post.text, Validators.required),
+        preview: new FormControl(post.text, Validators.required)
       });
     });
   }
@@ -46,6 +47,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       ...this.post,
       title: this.form.value.title,
       text: this.form.value.text,
+      preview: this.form.value.preview
     }).subscribe(() => {
       this.alert.success('Пост успешно обновлен!');
     });
